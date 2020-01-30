@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     pom = readMavenPom file: 'pom.xml'
-                    sh "mvn clean install -Psimple-tests"
+                    powershell "mvn clean install -Psimple-tests"
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                 script {
                     try {
                         pom = readMavenPom file: 'pom.xml'
-                        sh "mvn clean install -Pcucumber-tests"
+                        powershell "mvn clean install -Pcucumber-tests"
 
                         cucumber buildStatus: 'UNSTABLE',
                             fileIncludePattern: '**/*.json',

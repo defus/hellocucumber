@@ -9,7 +9,7 @@ pipeline {
                 checkout([$class: 'GitSCM'])
 
                 script {
-                    pom = readMavenPom file: 'pom.xml'
+                    // pom = readMavenPom file: 'pom.xml'
                     sh "mvn clean install"
                 }
             }

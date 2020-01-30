@@ -5,9 +5,12 @@ pipeline {
     stages {
         stage('Checkout') {
             agent { label 'windows-tests-fonctionnels-1' }
-            steps {
-                checkout([$class: 'GitSCM'])
+            checkout([$class: 'GitSCM'])
+        }
 
+        stage ('Build') {
+            agent { label 'windows-tests-fonctionnels-1' }
+            steps {
                 script {
                     pom = readMavenPom file: 'pom.xml'
                     powershell "mvn clean install"

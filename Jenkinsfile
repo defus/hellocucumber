@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     pom = readMavenPom file: 'pom.xml'
-                    powershell "mvn clean install -Psimple-tests"
+                    sh "mvn clean install -Psimple-tests"
                 }
             }
         }

@@ -15,14 +15,6 @@ public class ExampleSteps {
 
     private final WebDriver driver = new ChromeDriver();
 
-    static {
-        try {
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Given("I am on the Google search page")
     public void I_visit_google() {
         driver.get("https:/www.google.com");

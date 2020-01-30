@@ -7,6 +7,11 @@ pipeline {
             agent { label 'windows-tests-fonctionnels-1' }
             steps {
                 checkout([$class: 'GitSCM'])
+
+                script {
+                    pom = readMavenPom file: 'pom.xml'
+                    sh "mvn clean install"
+                }
             }
         }
 

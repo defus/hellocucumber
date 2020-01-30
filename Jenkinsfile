@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             agent { label 'windows-tests-fonctionnels-1' }
             steps {
-                checkout([$class: 'GitSCM', gitTool: 'GitWindows'])
+                checkout([$class: 'GitSCM'])
             }
         }
 

@@ -14,7 +14,8 @@ pipeline {
         }
 
         stage('Generate Cucumber HTML report') {
-            cucumber buildStatus: 'UNSTABLE',
+            steps {
+                cucumber buildStatus: 'UNSTABLE',
                     fileIncludePattern: '**/*.json',
                     trendsLimit: 10,
                     classifications: [
@@ -23,6 +24,7 @@ pipeline {
                             'value': 'Firefox'
                         ]
                     ]
+            }
         }
 
         stage("Dependency Check") {

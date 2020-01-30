@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     pom = readMavenPom file: 'pom.xml'
-                    powershell "mvn clean install"
+                    powershell "mvn clean install -Psimple-tests"
                 }
             }
         }
@@ -23,13 +23,21 @@ pipeline {
         stage('Generate Cucumber HTML report') {
             agent { label 'windows-tests-fonctionnels-1' }
             steps {
+                script {
+                    try {
+                        pom = readMavenPom file: 'pom.xml'
+                        sh "mvn clean install -Pcucumber-tests"
+                    } catch (Exception e) {
+                        sh 'Erreur lors de l\'analyse cucumber'
+                    }
+                }
                 cucumber buildStatus: 'UNSTABLE',
                     fileIncludePattern: '**/*.json',
                     trendsLimit: 10,
                     classifications: [
                         [
                             'key': 'Browser',
-                            'value': 'Firefox'
+                            'value': 'Chrome'
                         ]
                     ]
             }

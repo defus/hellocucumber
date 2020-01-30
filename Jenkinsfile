@@ -27,19 +27,33 @@ pipeline {
                     try {
                         pom = readMavenPom file: 'pom.xml'
                         sh "mvn clean install -Pcucumber-tests"
+
+                        cucumber buildStatus: 'UNSTABLE',
+                            fileIncludePattern: '**/*.json',
+                            trendsLimit: 10,
+                            classifications: [
+                                [
+                                    'key': 'Browser',
+                                    'value': 'Chrome'
+                                ]
+                            ]
                     } catch (Exception e) {
                         sh 'Erreur lors de l\'analyse cucumber'
+
+                        cucumber buildStatus: 'UNSTABLE',
+                            fileIncludePattern: '**/*.json',
+                            trendsLimit: 10,
+                            classifications: [
+                                [
+                                    'key': 'Browser',
+                                    'value': 'Chrome'
+                                ]
+                            ]
+                        
+                        error("Le build a échoué à cause de cucumber")
                     }
                 }
-                cucumber buildStatus: 'UNSTABLE',
-                    fileIncludePattern: '**/*.json',
-                    trendsLimit: 10,
-                    classifications: [
-                        [
-                            'key': 'Browser',
-                            'value': 'Chrome'
-                        ]
-                    ]
+                
             }
         }
 

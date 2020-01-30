@@ -10,7 +10,7 @@ pipeline {
 
                 script {
                     // pom = readMavenPom file: 'pom.xml'
-                    sh "mvn clean install"
+                    powershell "mvn clean install"
                 }
             }
         }

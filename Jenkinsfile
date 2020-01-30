@@ -38,8 +38,6 @@ pipeline {
                                 ]
                             ]
                     } catch (Exception e) {
-                        sh 'Erreur lors de l\'analyse cucumber'
-
                         cucumber buildStatus: 'UNSTABLE',
                             fileIncludePattern: '**/*.json',
                             trendsLimit: 10,

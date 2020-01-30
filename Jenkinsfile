@@ -1,19 +1,29 @@
 def pom, isMultiModuleBuild, pomModule
 pipeline {
-    agent { label 'windows-tests-fonctionnels-1' }
+    agent none
+
     stages {
+        stage('Checkout') {
+            agent { label 'windows-tests-fonctionnels-1' }
+            steps {
+                checkout scm
+            }
+        }
+
         // BUILD START
         stage('Build') {
-          steps {
-            // Run the maven build
-            script {
-                pom = readMavenPom file: 'pom.xml'
-                sh "mvn clean install"
+            agent { label 'windows-tests-fonctionnels-1' }
+            steps {
+                // Run the maven build
+                script {
+                    pom = readMavenPom file: 'pom.xml'
+                    sh "mvn clean install"
+                }
             }
-          }
         }
 
         stage('Generate Cucumber HTML report') {
+            agent { label 'windows-tests-fonctionnels-1' }
             steps {
                 cucumber buildStatus: 'UNSTABLE',
                     fileIncludePattern: '**/*.json',
@@ -28,6 +38,7 @@ pipeline {
         }
 
         stage("Dependency Check") {
+            agent { label 'windows-tests-fonctionnels-1' }
             steps {
               script{
                   isMultiModuleBuild = pom.modules.size() != 0
@@ -55,6 +66,7 @@ pipeline {
 
 
         stage ("Dependency Track"){
+            agent { label 'windows-tests-fonctionnels-1' }
             steps {
                script{
 
